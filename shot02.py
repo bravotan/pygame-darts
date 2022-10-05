@@ -18,10 +18,11 @@ pygame.display.flip()
 
 clock = pygame.time.Clock()
 
+
 class Bullet:
     r = 10
-    fgcolor = color.Color('red')
-    bgcolor = color.Color('white')
+    fgcolor = Color('red')
+    bgcolor = Color('white')
     speedlevel = 0.005
     def __init__(self, ini_pos, target_pos, takentime):
         ini_x, ini_y = ini_pos
@@ -78,6 +79,7 @@ def main():
             scr.blit(bullet.surface, bullet.center)
 
         pygame.display.flip()
+
 
 if __name__ == '__main__':
     main()

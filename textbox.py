@@ -49,13 +49,13 @@ class TextBox(object):
             screen.blit(self._surface, r_q)
             for i in range(len(string)):
                 c = string[i]
-                if i == idx: self._font.set_underline(True)                    
+                if i == idx: self._font.set_underline(True)
                 img_a = self._font.render(c, True, WHITE)
                 self._font.set_underline(False)
                 r_a = img_a.get_rect()
                 r_a.topleft = [r_q.x + x_off,
                                r_q.y + self._font.get_linesize() + 1]
-                x_off += img_a.get_width()            
+                x_off += img_a.get_width()
                 screen.blit(img_a, r_a)
 
             if idx == len(string):
@@ -142,5 +142,5 @@ if __name__ == '__main__':
     pygame.init()
     screen = pygame.display.set_mode([640, 240])
     box = TextBox("Please enter a filename:")
-    print "You entered", box.ask(screen)
+    print("You entered", box.ask(screen))
     pygame.quit()

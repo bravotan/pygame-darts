@@ -16,12 +16,14 @@ bg.fill((255, 255, 255))
 scr.blit(bg, (0, 0))
 pygame.display.flip()
 
+
 def main():
     while True:
         for event in pygame.event.get():
             if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
                 return
         pygame.display.flip()
+
 
 if __name__ == '__main__':
     main()

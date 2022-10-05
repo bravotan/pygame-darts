@@ -5,6 +5,7 @@ from pygame.locals import *
 import math
 import time
 
+
 pygame.init()
 scr = pygame.display.set_mode((600, 600))
 pygame.display.set_caption('shot test')
@@ -18,11 +19,12 @@ pygame.display.flip()
 
 clock = pygame.time.Clock()
 
+
 class Bullet:
     speed = 10
     r = 10
-    fgcolor = color.Color('red')
-    bgcolor = color.Color('white')
+    fgcolor = Color('red')
+    bgcolor = Color('white')
     def __init__(self, ini_pos, target_pos):
         ini_x, ini_y = ini_pos
         self.pos = ini_pos
@@ -42,7 +44,8 @@ class Bullet:
     def move(self):
         x, y = self.center
         self.center = (x, y - self.speed)
-        
+
+
 def main():
     bullets = []
     while True:
@@ -70,6 +73,7 @@ def main():
             scr.blit(bullet.surface, bullet.center)
 
         pygame.display.flip()
+
 
 if __name__ == '__main__':
     main()

@@ -18,20 +18,22 @@ pygame.display.flip()
 
 clock = pygame.time.Clock()
 
+
 class Room:
     wall_distance = 250
+
 
 class Bullet:
     g = 200
     r = 10
-    fgcolor = color.Color('red')
-    bgcolor = color.Color('white')
+    fgcolor = Color('red')
+    bgcolor = Color('white')
     speedrate = 0.01
     vrate = 0.01
     angle_base_len = 150.0
     angle_range = 20.0
     angle_positive_max = 30.0
-    
+
     def __init__(self, start_pos, end_pos, start_t, end_t):
         start_x, start_y = start_pos
         end_x, end_y = end_pos
@@ -65,7 +67,7 @@ class Bullet:
         # calculate center position of bullet.
         self.center = start_x, start_y
         self.pos = start_x - self.r, start_y - self.r
-        
+
         # create and draw surface.
         self.surface = pygame.Surface((self.r * 2, self.r * 2))
         self.surface = self.surface.convert()
@@ -99,6 +101,7 @@ class Bullet:
     def get_rect(self):
         return self.surface.get_rect()
 
+
 def outofrect(pos, rect):
     x, y = pos
     if rect.left > x:
@@ -110,7 +113,8 @@ def outofrect(pos, rect):
     if rect.bottom < y:
         return True
     return False
-    
+
+
 def main():
     bullets = []
     screct = scr.get_rect()
@@ -143,6 +147,7 @@ def main():
             scr.blit(bullet.surface, bullet.pos)
 
         pygame.display.flip()
+
 
 if __name__ == '__main__':
     main()

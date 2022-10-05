@@ -18,7 +18,9 @@ pygame.display.flip()
 
 clock = pygame.time.Clock()
 
+
 class Obj(pygame.sprite.Sprite):
+
     def __init__(self, pos=(0, 0)):
         pygame.sprite.Sprite.__init__(self)
         FONTNAME = 'GDhighwayJapan-026b1.otf'
@@ -31,17 +33,19 @@ class Obj(pygame.sprite.Sprite):
         self.center_x = self.width / 2.0
         self.center_y = self.height / 2.0
         self.move(pos)
-        
+
     def move(self, pos):
         x, y = pos
         self.center_x = self.width / 2.0 + x
         self.center_y = self.height / 2.0 + y
         self.rect = self.rect.move(pos)
+
     def update(self):
         if self.rect.colliderect(pygame.mouse.get_pos(), (0, 0)):
             self.image = self.redX
         else:
             self.image = self.blackX
+
 
 def main():
     screct = scr.get_rect()
@@ -58,6 +62,7 @@ def main():
         allsprites.update()
         allsprites.draw(scr)
         pygame.display.flip()
+
 
 if __name__ == '__main__':
     main()

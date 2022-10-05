@@ -18,9 +18,12 @@ pygame.display.flip()
 
 clock = pygame.time.Clock()
 
+
 class Board(pygame.sprite.Sprite):
+
     image_fn = 'dartsboard.png'
     points = 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5, 20, 1, 18, 4, 13, 6
+
     def __init__(self, pos=(0, 0)):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(self.image_fn).convert_alpha()
@@ -29,7 +32,7 @@ class Board(pygame.sprite.Sprite):
         self.center_x = self.width / 2.0
         self.center_y = self.height / 2.0
         self.move(pos)
-        
+
     def move(self, pos):
         x, y = pos
         self.center_x = self.width / 2.0 + x
@@ -61,22 +64,25 @@ class Board(pygame.sprite.Sprite):
             return stdpoint * 2
         return stdpoint
 
+
 def main():
     screct = scr.get_rect()
 
     board = Board((90, 90))
     allsprites = pygame.sprite.RenderPlain(board)
+
     while True:
         clock.tick(30)
         for event in pygame.event.get():
             if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
                 return
             if event.type == MOUSEBUTTONDOWN:
-                print board.getpoint(pygame.mouse.get_pos())
+                print(board.getpoint(pygame.mouse.get_pos()))
 
         scr.blit(bg, (0, 0))
         allsprites.draw(scr)
         pygame.display.flip()
+
 
 if __name__ == '__main__':
     main()

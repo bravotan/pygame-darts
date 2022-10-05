@@ -8,14 +8,18 @@ import math
 import time
 FONTNAME = 'GDhighwayJapan-026b1.otf'
 
+
 class GameApp:
+
     SCREEN_SIZE = 640, 480
     TITLE = 'Spyder darts game'
     FPS = 60
+
     def __init__(self):
         self.display = pygame.display.set_mode(self.SCREEN_SIZE)
         pygame.display.set_caption(self.TITLE)
         pygame.mouse.set_visible(True)
+
     def mainloop(self):
         clock = pygame.time.Clock()
         seen = TitleSeen()
@@ -28,16 +32,22 @@ class GameApp:
                 seen = newseen
             pygame.display.flip()
 
+
 class Seen:
+
     def __init__(self):
         self._screen = pygame.display.get_surface()
         self._surface = pygame.Surface(self._screen.get_size()).convert_alpha()
+
     def update(self):
         pass
 
+
 class GameSeen(Seen):
+
     def __init__(self):
         Seen.__init__(self)
+
         class Board(pygame.sprite.Sprite):
             IMAGE_FILE = 'dartsboard.png'
             inbull = 12.7/4.0
@@ -47,6 +57,7 @@ class GameSeen(Seen):
             double_inside = 162/2.0
             double_outside = 170/2.0
             points = 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5, 20, 1, 18, 4, 13, 6
+
             def __init__(self, pos=(0, 0)):
                 pygame.sprite.Sprite.__init__(self)
                 self.image = pygame.image.load(self.IMAGE_FILE).convert_alpha()
@@ -55,13 +66,13 @@ class GameSeen(Seen):
                 self.center_x = self.width / 2.0
                 self.center_y = self.height / 2.0
                 self.move(pos)
-        
+
             def move(self, pos):
                 x, y = pos
                 self.center_x = self.width / 2.0 + x
                 self.center_y = self.height / 2.0 + y
                 self.rect = self.rect.move(pos)
-        
+
             def getpoint(self, pos):
                 angle_p = 2 * math.pi / 20
                 x, y = pos
@@ -86,7 +97,7 @@ class GameSeen(Seen):
                 if self.double_inside <= distance <= self.double_outside:
                     return point, DOUBLE
                 return point, SINGLE
-        
+
         class BoardShadow(pygame.sprite.Sprite):
             image_fn = 'dartsboard-shadow.png'
             def __init__(self, pos=(0, 0)):
@@ -97,18 +108,19 @@ class GameSeen(Seen):
                 self.center_x = self.width / 2.0
                 self.center_y = self.height / 2.0
                 self.move(pos)
-        
+
             def move(self, pos):
                 x, y = pos
                 self.center_x = self.width / 2.0 + x
                 self.center_y = self.height / 2.0 + y
                 self.rect = self.rect.move(pos)
+
         # setup darts board
         board = Board()
         boardshadow = BoardShadow()
         scr_x, scr_y = self._screen.get_size()
         board_x, board_y = board.image.get_size()
-        board.move((scr_x/2 - board_x/2, scr_y/2 - board_y/2 - 20)) 
+        board.move((scr_x/2 - board_x/2, scr_y/2 - board_y/2 - 20))
         boardshadow.move((scr_x/2 - board_x/2, scr_y/2 - board_y/2 - 10))
         self.board = pygame.sprite.RenderPlain((boardshadow, board))
         # background
@@ -118,12 +130,15 @@ class GameSeen(Seen):
         self.se_end = pygame.mixer.Sound('end.wav')
 
         # game state
+
     def blitimage(self, surface):
         surface.blit(self.bg, (0, 0))
         self.board.draw(surface)
+
     def update(self):
         self._screen.blit(self.bg, (0, 0))
         self.board.draw(self._screen)
+
 
 class Countup(GameSeen):
     def update(self):
@@ -132,6 +147,7 @@ class Countup(GameSeen):
         if event.type == QUIT:
             return QUIT
 
+
 class Cricket(GameSeen):
     def update(self):
         GameSeen.update(self)
@@ -139,28 +155,32 @@ class Cricket(GameSeen):
         if event.type == QUIT:
             return QUIT
 
+
 def getseenbyname(name):
     if name == 'countup':
         return Countup()
     if name == 'cricket':
         return Cricket()
 
+
 class TitleSeen(Seen):
+
     DARKNESS_COLOR = (0, 0, 0, 200)
     TITLE_FONT = pygame.font.Font(FONTNAME, 100)
     TITLE = 'spyder'
-    TITLE_COLOR = color.Color('White')
+    TITLE_COLOR = Color('White')
     TITLE_POS = (50, 100)
-    STRIPE_COLOR = (color.Color('Brown'))
+    STRIPE_COLOR = (Color('Brown'))
     GAME_NAMES = 'countup', 'cricket'
     MENU_RIGHTMARGIN = 120
+
     def __init__(self):
         Seen.__init__(self)
         class Button(pygame.sprite.Sprite):
             FONT_SIZE = 20
             FONT = pygame.font.Font(FONTNAME, FONT_SIZE)
-            DEFAULT_COLOR = color.Color('White')
-            ROLLOVER_COLOR = color.Color('Red')
+            DEFAULT_COLOR = Color('White')
+            ROLLOVER_COLOR = Color('Red')
             def __init__(self, text, screen):
                 pygame.sprite.Sprite.__init__(self)
                 self.text = text
@@ -193,6 +213,7 @@ class TitleSeen(Seen):
                          ty+tposy+10+i*(Button.FONT_SIZE+10)))
             self.buttons.add(button)
             self.gameseen = GameSeen()
+
     def update(self):
         title_x, title_y = self.title_text.get_size()
         tpos_x, tpos_y = self.TITLE_POS
@@ -202,7 +223,7 @@ class TitleSeen(Seen):
         darkness = pygame.Surface((scr_x, scr_y)).convert_alpha()
         darkness.fill(self.DARKNESS_COLOR)
         self._surface.blit(darkness, (0, 0))
-        
+
         self._surface.blit(self.title_text, self.TITLE_POS)
         pygame.draw.rect(self._surface, self.TITLE_COLOR, (tpos_x, tpos_y-5, title_x, 5))
         pygame.draw.rect(self._surface, self.TITLE_COLOR, (tpos_x, tpos_y+title_y+5, title_x, 5))
@@ -215,8 +236,9 @@ class TitleSeen(Seen):
         for button in self.buttons.sprites():
             name = button.chk_select(event)
             if name:
-                print name
+                print(name)
                 return getseenbyname(name)
+
 
 if __name__ == '__main__':
     GameApp().mainloop()

@@ -18,6 +18,7 @@ pygame.display.flip()
 
 clock = pygame.time.Clock()
 
+
 def initial_velocity(start_pos, end_pos, start_t, end_t):
     start_x, start_y = start_pos
     end_x, end_y = end_pos
@@ -26,9 +27,10 @@ def initial_velocity(start_pos, end_pos, start_t, end_t):
         return 0
     return math.sqrt((start_x-end_x)**2+(start_y-end_y)**2) / takentime
 
+
 class VZone:
     st_width = 100, 60, 30 #straight zone width
-    
+
     def __init__(self, pos):
         self.pos = (pos[0] - self.st_width[0]/2, 0)
     def draw(self, surface, height):
@@ -39,12 +41,14 @@ class VZone:
         color = 255, 0, 0
         pygame.draw.rect(surface, color, (((self.st_width[0] - self.st_width[2])/2, 0), (self.st_width[2], height)))
 
+
 class Dart:
-    def through:
-        
+    def through(self):
+        pass
+
 
 def main():
-    
+
     while True:
         clock.tick(60)
         for event in pygame.event.get():
@@ -59,11 +63,12 @@ def main():
             if event.type == MOUSEBUTTONUP:
                 end_pos = pygame.mouse.get_pos()
                 end_t = time.time()
-                print initial_velocity(start_pos, end_pos, start_t, end_t)
+                print(initial_velocity(start_pos, end_pos, start_t, end_t))
                 bg.fill((255, 255, 255))
                 scr.blit(bg, (0, 0))
-            
+
         pygame.display.flip()
+
 
 if __name__ == '__main__':
     main()

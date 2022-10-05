@@ -25,8 +25,10 @@ TRIPLE = 3
 BULL = 4
 DBULL = 5
 
+
 class Room:
     wall_distance = 237
+
 
 class Bullet:
     g = 10
@@ -103,6 +105,7 @@ class Bullet:
     def get_rect(self):
         return self.surface.get_rect()
 
+
 class BoardShadow(pygame.sprite.Sprite):
     image_fn = './dartsboard-shadow.png'
     def __init__(self, pos=(0, 0)):
@@ -118,6 +121,7 @@ class BoardShadow(pygame.sprite.Sprite):
         self.center_x = self.width / 2.0 + x
         self.center_y = self.height / 2.0 + y
         self.rect = self.rect.move(pos)
+
 
 class Board(pygame.sprite.Sprite):
     image_fn = 'dartsboard.png'
@@ -168,6 +172,7 @@ class Board(pygame.sprite.Sprite):
             return point, DOUBLE
         return point, SINGLE
 
+
 class ScorePanel:
     color = (0, 0, 0, 100)
     fontname = 'GDhighwayJapan-026b1.otf'
@@ -177,6 +182,7 @@ class ScorePanel:
         self.pos = pos
     def update(self):
         pass
+
 
 class ThrowScorePanel(ScorePanel):
     def __init__(self, pos, size):
@@ -199,7 +205,7 @@ class ThrowScorePanel(ScorePanel):
         if len(self.points) >= 3:
             self.points = []
         self.points.append((throw, ring, point))
-        
+
     def ringpttostr(self, ring, point):
         if point <= 0:
             return ' 0 OutBoard'
@@ -213,7 +219,7 @@ class ThrowScorePanel(ScorePanel):
             return '25 BULL'
         if ring == DBULL:
             return '50 D-BULL'
-            
+
     def update(self):
         self.surface.fill(self.color)
         x, y = self.surface.get_size()
@@ -225,6 +231,7 @@ class ThrowScorePanel(ScorePanel):
         for throw, ring, point in self.points:
             self.surface.blit(self.pfont.render(self.ringpttostr(ring, point), True, color.Color('White')), (10, ypos))
             ypos += 20
+
 
 class SoundEffect:
     hit_se = pygame.mixer.Sound('hit.wav')
@@ -257,7 +264,7 @@ def outofrect(pos, rect):
     if rect.bottom < y:
         return True
     return False
-    
+
 def main():
     screct = scr.get_rect()
     room = Room()
@@ -309,6 +316,7 @@ def main():
 
         pygame.display.flip()
         time.sleep(0.01)
+
 
 if __name__ == '__main__':
     main()
